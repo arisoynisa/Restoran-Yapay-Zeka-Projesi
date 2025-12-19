@@ -1,0 +1,176 @@
+{
+  "name": "Rezervasyon maili",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "09c1ffb7-fb97-4a95-8bd7-d02c6ef682af",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2593784b-2c60-4f48-9ac1-8120cccd0177",
+      "name": "Webhook",
+      "webhookId": "09c1ffb7-fb97-4a95-8bd7-d02c6ef682af"
+    },
+    {
+      "parameters": {
+        "sendTo": "dogaarisoy42@gmail.com",
+        "subject": "Yeni Rezervasyon Detayları Hk.",
+        "message": "=Yeni Rezervasyon: \nAd Soyad: {{ $json.body.Name }}\nTarih : {{ $json.body.Date }}\nSaat : {{ $json.body.Time }}\nEmail : {{ $json.body.Email }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "485f8dce-d7f3-4eca-92d3-f3ce2d348d49",
+      "name": "Send a message",
+      "webhookId": "784e7163-fffa-4106-b8d8-ba2ae24a4561",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "5lR6lZpObdKtdVyg",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1kUaHcrSWD5wg0eZYLr5QitpOamXzCQcmrPfZOtdDFoI",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sayfa1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kUaHcrSWD5wg0eZYLr5QitpOamXzCQcmrPfZOtdDFoI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name Surname": "={{ $json.body.Name }}",
+            "Email": "={{ $json.body.Email }}",
+            "Date": "={{ $json.body.Date }}",
+            "Time": "={{ $json.body.Time }}",
+            "Message": "={{ $json.body.Message }}",
+            "Phone number": "={{ $json.body.Number }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name Surname",
+              "displayName": "Name Surname",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone number",
+              "displayName": "Phone number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Time",
+              "displayName": "Time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        192
+      ],
+      "id": "83857625-cefc-4733-8d99-2504d3c67819",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "EnNi1PdyYlUlp83a",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e4759895-118e-4390-bd22-3bd5fcfb288e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9466576bbe9dd99c5676a7e037e7fe70e63380a9943d48338ac972bee18a9a21"
+  },
+  "id": "WB3QsmUQsCTSLHgE",
+  "tags": []
+}
